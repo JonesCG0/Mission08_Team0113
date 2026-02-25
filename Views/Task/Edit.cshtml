@@ -1,0 +1,36 @@
+﻿@* Views/Task/Edit.cshtml *@
+@model Task
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<div class="row">
+    <div class="col-12 col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Edit Task</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    @Html.AntiForgeryToken()
+
+                    @* Hidden ID so controller knows what to update *@
+                    <input type="hidden" asp-for="TaskId" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <partial name="_TaskForm" model="Model" />
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a asp-action="Quadrants" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

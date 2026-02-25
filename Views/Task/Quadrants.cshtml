@@ -1,0 +1,72 @@
+﻿@* Views/Task/Quadrants.cshtml *@
+@model IEnumerable<Task>
+@{
+    ViewData["Title"] = "Quadrants";
+    var tasks = (Model ?? Enumerable.Empty<Task>())
+        .Where(t => t != null && !t.Completed)  // safety + requirement
+        .ToList();
+
+    // Helper lists for each quadrant (1-4)
+    var q1 = tasks.Where(t => t.Quadrant == 1).ToList();
+    var q2 = tasks.Where(t => t.Quadrant == 2).ToList();
+    var q3 = tasks.Where(t => t.Quadrant == 3).ToList();
+    var q4 = tasks.Where(t => t.Quadrant == 4).ToList();
+}
+
+<div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Task Quadrants</h2>
+        <a class="btn btn-primary" asp-action="Create">+ Add Task</a>
+    </div>
+</div>
+
+@* Bootstrap Grid system: 2x2 layout using rows/cols *@
+<div class="row g-3">
+    <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Quadrant I</strong>
+                <div class="text-muted small">Important / Urgent</div>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("_QuadrantList", q1)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Quadrant II</strong>
+                <div class="text-muted small">Important / Not Urgent</div>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("_QuadrantList", q2)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Quadrant III</strong>
+                <div class="text-muted small">Not Important / Urgent</div>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("_QuadrantList", q3)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Quadrant IV</strong>
+                <div class="text-muted small">Not Important / Not Urgent</div>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("_QuadrantList", q4)
+            </div>
+        </div>
+    </div>
+</div>

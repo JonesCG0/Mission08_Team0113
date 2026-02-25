@@ -1,0 +1,75 @@
+﻿@* Views/Task/_QuadrantList.cshtml *@
+@model IEnumerable<Task>
+
+@{
+    var list = (Model ?? Enumerable.Empty<Task>()).Where(t => t != null).ToList();
+}
+
+@if (!list.Any())
+{
+    <div class="text-muted">No tasks.</div>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var t in list)
+        {
+            <div class="list-group-item">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-7">
+                        <div class="fw-semibold">@t.Task</div>
+
+                        <div class="small text-muted">
+                            @* Show due date only if it exists *@
+                            @if (t.DueDate.HasValue)
+                            {
+                                <span>Due: @t.DueDate.Value.ToString("yyyy-MM-dd")</span>
+                                <span class="mx-1">•</span>
+                            }
+
+                            @* Category display: handles either Category navigation property or fallback *@
+                            @if (t.Category != null)
+                            {
+                                <span>@t.Category.Name</span>
+                            }
+                            else
+                            {
+                                <span>Category: (not set)</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-5 mt-2 mt-md-0">
+                        <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                            @* Edit link *@
+                            <a class="btn btn-sm btn-outline-primary"
+                               asp-action="Edit"
+                               asp-route-id="@t.TaskId">
+                                Edit
+                            </a>
+
+                            @* Delete: POST is safer than GET *@
+                            <form asp-action="Delete" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@t.TaskId" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Delete this task?');">
+                                    Delete
+                                </button>
+                            </form>
+
+                            @* Mark Complete: POST *@
+                            <form asp-action="Complete" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@t.TaskId" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    Complete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
