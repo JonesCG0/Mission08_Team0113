@@ -1,0 +1,55 @@
+﻿@* Views/Task/_TaskForm.cshtml *@
+@model Task
+
+<div class="row g-3">
+    <div class="col-12">
+        <label asp-for="Task" class="form-label"></label>
+        <input asp-for="Task" class="form-control" />
+        <span asp-validation-for="Task" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label asp-for="DueDate" class="form-label"></label>
+        <input asp-for="DueDate" class="form-control" type="date" />
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label asp-for="Quadrant" class="form-label"></label>
+        <select asp-for="Quadrant" class="form-select">
+            <option value="">-- Select --</option>
+            <option value="1">Quadrant I (Important / Urgent)</option>
+            <option value="2">Quadrant II (Important / Not Urgent)</option>
+            <option value="3">Quadrant III (Not Important / Urgent)</option>
+            <option value="4">Quadrant IV (Not Important / Not Urgent)</option>
+        </select>
+        <span asp-validation-for="Quadrant" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label class="form-label">Category</label>
+
+        @* Error-safe: if controller forgets ViewBag.Categories, show a helpful message *@
+        @if (ViewBag.Categories == null)
+        {
+            <div class="alert alert-warning mb-0">
+                Categories not loaded. (Controller should set ViewBag.Categories = new SelectList(...).)
+            </div>
+        }
+        else
+        {
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
+                <option value="">-- Select --</option>
+            </select>
+        }
+
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6 d-flex align-items-end">
+        <div class="form-check">
+            <input asp-for="Completed" class="form-check-input" />
+            <label asp-for="Completed" class="form-check-label"></label>
+        </div>
+    </div>
+</div>

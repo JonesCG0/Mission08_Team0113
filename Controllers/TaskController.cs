@@ -23,7 +23,7 @@ namespace Mission08.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(object task /* replace with TaskItem */)
+        public IActionResult Add(object task /* replace with Task */)
         {
             // TODO: validate + _repo.AddTask(task) + _repo.Save()
             return RedirectToAction("Index");
@@ -37,7 +37,7 @@ namespace Mission08.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(object task /* replace with TaskItem */)
+        public IActionResult Edit(object task /* replace with Task */)
         {
             // TODO: validate + _repo.UpdateTask(task) + _repo.Save()
             return RedirectToAction("Index");

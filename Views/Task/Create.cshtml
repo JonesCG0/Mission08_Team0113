@@ -1,0 +1,34 @@
+﻿@* Views/Task/Create.cshtml *@
+@model Task
+@{
+    ViewData["Title"] = "Add Task";
+}
+
+<div class="row">
+    <div class="col-12 col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Add a Task</h5>
+            </div>
+            <div class="card-body">
+                @* Validation summary helps catch model errors *@
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <partial name="_TaskForm" model="Model" />
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a asp-action="Quadrants" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
