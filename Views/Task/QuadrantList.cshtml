@@ -1,8 +1,8 @@
 ﻿@* Views/Task/_QuadrantList.cshtml *@
-@model IEnumerable<Task>
+@model IEnumerable<TaskItem>
 
 @{
-    var list = (Model ?? Enumerable.Empty<Task>()).Where(t => t != null).ToList();
+    var list = (Model ?? Enumerable.Empty<TaskItem>()).Where(t => t != null).ToList();
 }
 
 @if (!list.Any())
@@ -17,24 +17,21 @@ else
             <div class="list-group-item">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-7">
-                        <div class="fw-semibold">@t.Task</div>
+                        <div class="fw-semibold">@t.TaskName</div>
 
                         <div class="small text-muted">
                             @* Show due date only if it exists *@
-                            @if (t.DueDate.HasValue)
-                            {
-                                <span>Due: @t.DueDate.Value.ToString("yyyy-MM-dd")</span>
-                                <span class="mx-1">•</span>
-                            }
+                            <span>Due: @t.DueDate.ToString("yyyy-MM-dd")</span>
+                            <span class="mx-1">•</span>
 
                             @* Category display: handles either Category navigation property or fallback *@
                             @if (t.Category != null)
                             {
-                                <span>@t.Category.Name</span>
+                            <span>@t.Category.Name</span>
                             }
                             else
                             {
-                                <span>Category: (not set)</span>
+                            <span>Category: (not set)</span>
                             }
                         </div>
                     </div>
@@ -44,14 +41,14 @@ else
                             @* Edit link *@
                             <a class="btn btn-sm btn-outline-primary"
                                asp-action="Edit"
-                               asp-route-id="@t.TaskId">
+                               asp-route-id="@t.TaskItemId">
                                 Edit
                             </a>
 
                             @* Delete: POST is safer than GET *@
                             <form asp-action="Delete" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@t.TaskId" />
+                                <input type="hidden" name="id" value="@t.TaskItemId" />
                                 <button type="submit" class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Delete this task?');">
                                     Delete
@@ -61,7 +58,7 @@ else
                             @* Mark Complete: POST *@
                             <form asp-action="Complete" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@t.TaskId" />
+                                <input type="hidden" name="id" value="@t.TaskItemId" />
                                 <button type="submit" class="btn btn-sm btn-success">
                                     Complete
                                 </button>

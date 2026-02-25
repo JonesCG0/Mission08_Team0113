@@ -1,8 +1,8 @@
 ﻿@* Views/Task/Quadrants.cshtml *@
-@model IEnumerable<Task>
+@model IEnumerable<TaskItem>
 @{
     ViewData["Title"] = "Quadrants";
-    var tasks = (Model ?? Enumerable.Empty<Task>())
+    var tasks = (Model ?? Enumerable.Empty<TaskItem>())
         .Where(t => t != null && !t.Completed)  // safety + requirement
         .ToList();
 

@@ -1,5 +1,5 @@
 ﻿@* Views/Task/Edit.cshtml *@
-@model Task
+@model TaskItem
 @{
     ViewData["Title"] = "Edit Task";
 }
@@ -15,7 +15,7 @@
                     @Html.AntiForgeryToken()
 
                     @* Hidden ID so controller knows what to update *@
-                    <input type="hidden" asp-for="TaskId" />
+                    <input type="hidden" asp-for="TaskItemId" />
 
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
