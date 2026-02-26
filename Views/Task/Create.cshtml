@@ -1,5 +1,4 @@
-﻿@* Views/Task/Create.cshtml *@
-@model TaskItem
+﻿@model TaskItem
 @{
     ViewData["Title"] = "Add Task";
 }
@@ -11,7 +10,6 @@
                 <h5 class="mb-0">Add a Task</h5>
             </div>
             <div class="card-body">
-                @* Validation summary helps catch model errors *@
                 <form asp-action="Create" method="post">
                     @Html.AntiForgeryToken()
 

@@ -1,5 +1,4 @@
-﻿@* Views/Task/_QuadrantList.cshtml *@
-@model IEnumerable<TaskItem>
+﻿@model IEnumerable<TaskItem>
 
 @{
     var list = (Model ?? Enumerable.Empty<TaskItem>()).Where(t => t != null).ToList();
@@ -20,32 +19,32 @@ else
                         <div class="fw-semibold">@t.TaskName</div>
 
                         <div class="small text-muted">
-                            @* Show due date only if it exists *@
-                            <span>Due: @t.DueDate.ToString("yyyy-MM-dd")</span>
-                            <span class="mx-1">•</span>
+                            @* Only show due date if it's a real date *@
+                            @if (t.DueDate > new DateTime(1900, 1, 1))
+                            {
+                                <span>Due: @t.DueDate.ToString("yyyy-MM-dd")</span>
+                                <span class="mx-1">•</span>
+                            }
 
-                            @* Category display: handles either Category navigation property or fallback *@
                             @if (t.Category != null)
                             {
-                            <span>@t.Category.Name</span>
+                                <span>@t.Category.Name</span>
                             }
                             else
                             {
-                            <span>Category: (not set)</span>
+                                <span>Category: (not set)</span>
                             }
                         </div>
                     </div>
 
                     <div class="col-12 col-md-5 mt-2 mt-md-0">
                         <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                            @* Edit link *@
                             <a class="btn btn-sm btn-outline-primary"
                                asp-action="Edit"
                                asp-route-id="@t.TaskItemId">
                                 Edit
                             </a>
 
-                            @* Delete: POST is safer than GET *@
                             <form asp-action="Delete" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@t.TaskItemId" />
@@ -55,7 +54,6 @@ else
                                 </button>
                             </form>
 
-                            @* Mark Complete: POST *@
                             <form asp-action="Complete" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@t.TaskItemId" />
