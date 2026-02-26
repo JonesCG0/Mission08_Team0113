@@ -1,12 +1,11 @@
-﻿@* Views/Task/Quadrants.cshtml *@
-@model IEnumerable<TaskItem>
+﻿@model IEnumerable<TaskItem>
 @{
     ViewData["Title"] = "Quadrants";
+
     var tasks = (Model ?? Enumerable.Empty<TaskItem>())
-        .Where(t => t != null && !t.Completed)  // safety + requirement
+        .Where(t => t != null && !t.Completed) // only show not completed
         .ToList();
 
-    // Helper lists for each quadrant (1-4)
     var q1 = tasks.Where(t => t.Quadrant == 1).ToList();
     var q2 = tasks.Where(t => t.Quadrant == 2).ToList();
     var q3 = tasks.Where(t => t.Quadrant == 3).ToList();
@@ -20,7 +19,6 @@
     </div>
 </div>
 
-@* Bootstrap Grid system: 2x2 layout using rows/cols *@
 <div class="row g-3">
     <div class="col-12 col-lg-6">
         <div class="card h-100 shadow-sm">

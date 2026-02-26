@@ -1,21 +1,26 @@
-﻿@* Views/Task/_TaskForm.cshtml *@
-@model TaskItem
+﻿@model TaskItem
 
 <div class="row g-3">
     <div class="col-12">
-        <label asp-for="TaskName" class="form-label"></label>
+        <label class="form-label">Task</label>
         <input asp-for="TaskName" class="form-control" />
         <span asp-validation-for="TaskName" class="text-danger"></span>
     </div>
 
     <div class="col-12 col-md-6">
-        <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" class="form-control" type="date" />
+        <label class="form-label">Due Date</label>
+
+        @* DueDate is DateTime (non-nullable), so we prevent 01/01/0001 from showing *@
+        <input name="DueDate"
+               type="date"
+               class="form-control"
+               value="@(Model.DueDate > new DateTime(1900, 1, 1) ? Model.DueDate.ToString("yyyy-MM-dd") : "")" />
+
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
     <div class="col-12 col-md-6">
-        <label asp-for="Quadrant" class="form-label"></label>
+        <label class="form-label">Quadrant</label>
         <select asp-for="Quadrant" class="form-select">
             <option value="">-- Select --</option>
             <option value="1">Quadrant I (Important / Urgent)</option>
@@ -29,11 +34,11 @@
     <div class="col-12 col-md-6">
         <label class="form-label">Category</label>
 
-        @* Error-safe: if controller forgets ViewBag.Categories, show a helpful message *@
+        @* Controller should set ViewBag.Categories (SelectList) *@
         @if (ViewBag.Categories == null)
         {
             <div class="alert alert-warning mb-0">
-                Categories not loaded. (Controller should set ViewBag.Categories = new SelectList(...).)
+                Categories not loaded. (Controller should set ViewBag.Categories.)
             </div>
         }
         else
@@ -49,7 +54,7 @@
     <div class="col-12 col-md-6 d-flex align-items-end">
         <div class="form-check">
             <input asp-for="Completed" class="form-check-input" />
-            <label asp-for="Completed" class="form-check-label"></label>
+            <label class="form-check-label" asp-for="Completed">Completed</label>
         </div>
     </div>
 </div>
